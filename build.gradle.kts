@@ -1,21 +1,7 @@
-plugins {
-    kotlin("jvm") version "2.0.20"
+tasks.create<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
 }
 
-group = "com.frybits"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(17)
+tasks.named<Wrapper>("wrapper") {
+    distributionType = Wrapper.DistributionType.ALL
 }
