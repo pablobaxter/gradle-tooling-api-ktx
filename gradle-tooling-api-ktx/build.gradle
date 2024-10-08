@@ -1,0 +1,8 @@
+plugins {
+    id("frybits-library")
+}
+
+dependencies {
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.gradle.tooling.api)
+}
