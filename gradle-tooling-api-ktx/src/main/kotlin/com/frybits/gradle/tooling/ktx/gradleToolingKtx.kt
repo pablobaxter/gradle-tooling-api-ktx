@@ -90,7 +90,7 @@ suspend fun BuildLauncher.await(): Void = suspendCancellableCoroutine { cont ->
 /**
  * Fetches a snapshot of the model of the given type for this project. This method blocks until the model is available.
  *
- * **This method is simply a convenience for calling `model(modelType).get()`**
+ * This method is simply a convenience for calling `model(modelType).get()`
  *
  * @return The model.
  * @throws UnsupportedVersionException When the target Gradle version does not support the given model.

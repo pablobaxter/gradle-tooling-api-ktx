@@ -3,7 +3,9 @@ package com.frybits.gradle
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
@@ -31,14 +33,19 @@ private fun Project.configureDokka() {
     apply<DokkaPlugin>()
     tasks.withType<DokkaTaskPartial> {
         dokkaSourceSets.configureEach {
-//            sourceLink {
-//                localDirectory.set(this@configureDokka.projectDir.resolve("src").resolve("main").resolve("kotlin"))
-//                remoteUrl.set(URI("https://github.com/pablobaxter/rx-preferences/tree/master/${this@configureDokka.name}/src/main/kotlin/").toURL())
-//                remoteLineSuffix.set("#L")
-//            }
+            sourceLink {
+                localDirectory.set(this@configureDokka.projectDir.resolve("src").resolve("main").resolve("kotlin"))
+                remoteUrl.set(URI("https://github.com/pablobaxter/gradle-tooling-api-ktx/tree/main/${this@configureDokka.name}/src/main/kotlin/").toURL())
+                remoteLineSuffix.set("#L")
+            }
+            val gradleTAPIVersion = this@configureDokka.the<VersionCatalogsExtension>()
+                .named("libs")
+                .findVersion("gradleTAPI")
+                .get()
             externalDocumentationLinks.add(
                 GradleExternalDocumentationLinkBuilder(this@configureDokka).apply {
-                    url.set(URI("https://reactivex.io/RxJava/2.x/javadoc/").toURL())
+                    url.set(URI("https://docs.gradle.org/$gradleTAPIVersion/javadoc/").toURL())
+                    packageListUrl.set(URI("https://docs.gradle.org/$gradleTAPIVersion/javadoc/element-list").toURL())
                 }
             )
         }
